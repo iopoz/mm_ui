@@ -25,6 +25,10 @@ class PlaceInfo(object):
     def open_place_details(self):
         if self.is_arrow_up():
             self.sapp.short_about_place.click()
+            try:
+                self.sapp.editor_place.is_displayed()
+            except NoSuchElementException:
+                self.sapp.scroll_screen()
             self.PAGE = self.sapp.get_page_source
         return 'place details is opened'
 

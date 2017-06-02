@@ -33,3 +33,10 @@ class Page(object):
             return content
         else:
             raise Exception('Empty page source. Please check.')
+
+    def scroll_screen(self):
+        start_y = int(self.screen_size['height'] * 0.8)
+        end_y = int(self.screen_size['height'] * 0.2)
+        start_x = int(self.screen_size['width'] / 2)
+        self.driver.swipe(start_x, start_y, start_x, end_y, 3000)
+

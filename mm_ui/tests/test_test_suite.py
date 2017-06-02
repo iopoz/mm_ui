@@ -25,8 +25,10 @@ class TestTestTask:
         assert app.place_details.is_place_details_shown()
         assert app.place_details.is_arrow_up()
         assert app.place_details.is_place_name_matched(env.place_name)
-        assert app.place_details.is_place_type_matched(env.plase_type)
+        assert app.place_details.is_place_type_matched(env.place_type)
         assert app.place_details.is_place_address_matched(env.place_street +', '+ env.place_home)
         assert app.place_details.is_place_distance_existed()
         assert app.place_details.is_place_direction_existed()
+
+    def test_2(self, app, env, storage):
         app.place_details.open_place_details()

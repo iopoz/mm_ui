@@ -11,41 +11,37 @@ class ShortAboutPlacePage(Page):
         return self.driver.find_element_by_id('tv__title')
 
     def get_place_title(self, page):
-        return page.find(".//*[contains(@resource-id ,'tv__title')]").get('text') #contains(@address,'Downing')
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__title']").get(
+            'text')  # contains(@address,'Downing')
 
     @property
     def short_about_place_subtitle(self):
         return self.driver.find_element_by_id('tv__subtitle')
 
     def get_place_subtitle(self, page):
-        return page.find(".//*[contains(@resource-id , 'tv__subtitle')]").get('text')
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__subtitle']").get('text')
 
     @property
     def short_about_place_address(self):
         return self.driver.find_element_by_id('tv__address')
 
     def get_place_address(self, page):
-        return page.find(".//*[contains(@resource-id , 'tv__address')]").get('text')
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__address']").get('text')
 
     @property
     def short_about_place_direction(self):
         return self.driver.find_element_by_id('av__direction')
 
     def get_place_direction(self, page):
-        if page.find(".//*[contains(@resource-id , 'av__direction')]"):
-            return True
-        else:
-            return False
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/av__direction']").get('enabled') == 'true'
 
     @property
     def short_about_place_distance(self):
         return self.driver.find_element_by_id('tv__straight_distance')
 
     def get_place_distance(self, page):
-        if page.find(".//*[contains(@resource-id , 'tv__straight_distance')]").get('text'):
-            return True
-        else:
-            return False
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__straight_distance']").get(
+            'enabled') == 'true'
 
     @property
     def about_place(self):
@@ -55,17 +51,29 @@ class ShortAboutPlacePage(Page):
     def about_place_time(self):
         return self.driver.find_element_by_id('today_opening_hours')
 
+    def get_place_time(self, page):
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/today_opening_hours']").get('text')
+
     @property
     def about_place_phone(self):
         return self.driver.find_element_by_id('tv__place_phone')
+
+    def get_place_phone(self, page):
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__place_phone']").get('text')
 
     @property
     def about_place_web(self):
         return self.driver.find_element_by_id('tv__place_website')  # tv__place_website
 
+    def get_place_web(self, page):
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__place_website']").get('text')
+
     @property
     def about_place_cuisine(self):
         return self.driver.find_element_by_id('tv__place_cuisine')  # tv__place_cuisine
+
+    def get_place_cuisine(self, page):
+        return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__place_cuisine']").get('text')
 
     @property
     def about_place_coordinate(self):
