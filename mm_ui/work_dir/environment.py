@@ -6,3 +6,6 @@ place_name = u'Руккола'#unicodedata.normalize('NFKD', u'Руккола').
 place_street = u'Никольская улица'#unicodedata.normalize('NFKD', u'Никольская улица').encode('ascii', 'ignore')
 place_home = u'8/1 с1'#unicodedata.normalize('NFKD', u'8/1 c1').encode('ascii', 'ignore')
 place_type = u'Ресторан'#unicodedata.normalize('NFKD', u'Ресторан').encode('ascii', 'ignore')
+language = 'Latin'
+name_place_in_language = 'Rukkola Latin'
+place_zip = '109012'

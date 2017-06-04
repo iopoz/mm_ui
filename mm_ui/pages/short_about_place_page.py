@@ -4,7 +4,7 @@ from pages.page import Page
 class ShortAboutPlacePage(Page):
     @property
     def short_about_place(self):
-        return self.wait_until_exist('pp__details')
+        return self.wait_until_not_exist('pp__details')
 
     @property
     def short_about_place_title(self):

@@ -32,3 +32,15 @@ class TestTestTask:
 
     def test_2(self, app, env, storage):
         app.place_details.open_place_details()
+        storage.place_info = app.place_details.get_place_info()
+        app.place_details.change_coordinate_type()
+        assert app.place_details.is_coordinates_changed(storage.place_info['coordinate'])
+        app.place_details.click_edit_place()
+
+    def test_3(self, app, env, storage):
+        assert app.editor.is_editor_opened()
+        app.editor.add_new_language(env.language, env.name_place_in_language)
+        app.editor.add_zip_code(env.place_zip)
+        assert app.editor.check_fields(storage.place_info)
+
+

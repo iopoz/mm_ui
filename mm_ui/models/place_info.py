@@ -22,14 +22,14 @@ class PlaceInfo(object):
         except NoSuchElementException:
             return True
 
-    def open_place_details(self):
-        if self.is_arrow_up():
-            self.sapp.short_about_place.click()
+    def open_place_details(self, count=3):
+        if count > 0:
             try:
                 self.sapp.editor_place.is_displayed()
+                self.PAGE = self.sapp.get_page_source
             except NoSuchElementException:
-                self.sapp.scroll_screen()
-            self.PAGE = self.sapp.get_page_source
+                self.sapp.scroll_screen
+                self.open_place_details(count-1)
         return 'place details is opened'
 
     def is_place_name_matched(self, name):
@@ -46,3 +46,20 @@ class PlaceInfo(object):
 
     def is_place_direction_existed(self):
         return self.sapp.get_place_direction(self.PAGE)
+
+    def get_place_info(self):
+        info={'time': self.sapp.get_place_time(self.PAGE),
+              'phone': self.sapp.get_place_phone(self.PAGE),
+              'site': self.sapp.get_place_web(self.PAGE),
+              'cuisine': self.sapp.get_place_cuisine(self.PAGE),
+              'coordinate': self.sapp.about_place_coordinate.text}
+        return info
+
+    def change_coordinate_type(self):
+        self.sapp.about_place_coordinate.click()
+
+    def is_coordinates_changed(self, old_type):
+        return old_type != self.sapp.about_place_coordinate.text
+
+    def click_edit_place(self):
+        self.sapp.editor_place.click()

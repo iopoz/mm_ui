@@ -4,23 +4,34 @@ from pages.page import Page
 class FullEditorPlacePage(Page):
     @property
     def place_category_field(self):
-        parent_elm = self.driver.find_element_by_id('category')
+        parent_elm = self.wait_until_not_exist('category')
         return parent_elm.find_element_by_id('name')
 
     @property
     def name_place_frame(self):
-        return self.driver.find_element_by_id('cv__name')
+        return self.wait_until_not_exist('cv__name')
 
     def get_name_by_location(self, location):
         languages = self.name_place_frame.find_elements_by_class_name('TextInputLayout')
         for language in languages:
             if location in language.text:
-                return location.find_element_by_id('input')
+                return language.find_element_by_id('input')
         return None
 
     @property
     def new_language_btn(self):
         return self.driver.find_element_by_id('add_langs')
+
+    @property
+    def language_list(self):
+        return self.driver.find_elements_by_id('name')
+
+    def get_interested_language(self, language):
+        l_list = self.language_list
+        for l in l_list:
+            if language == l.text and l.location['y'] < int(self.screen_size['height'] * 0.8):
+                return l
+        return None
 
     @property
     def address_frame(self):
@@ -90,4 +101,5 @@ class FullEditorPlacePage(Page):
     def wifi(self):
         return self.driver.find_element_by_id('sw__wifi')
 
-
+    def get_field(self, page, value):
+        return page.find(".//*[@text='%s']" % value)

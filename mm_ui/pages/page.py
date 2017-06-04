@@ -16,10 +16,10 @@ class Page(object):
     def screen_size(self):
         return self.driver.get_window_size()
 
-    def wait_until_exist(self, locator):
+    def wait_until_not_exist(self, locator):
         return self.wait.until(EC.visibility_of_element_located((By.ID, locator)))
 
-    def wait_until_not_exist(self, locator):
+    def wait_until_exist(self, locator):
         return self.wait.until_not(EC.visibility_of_element_located((By.ID, locator)))
 
     def long_wait_until_not_exist(self, locator):
@@ -34,9 +34,10 @@ class Page(object):
         else:
             raise Exception('Empty page source. Please check.')
 
+    @property
     def scroll_screen(self):
         start_y = int(self.screen_size['height'] * 0.8)
         end_y = int(self.screen_size['height'] * 0.2)
         start_x = int(self.screen_size['width'] / 2)
-        self.driver.swipe(start_x, start_y, start_x, end_y, 3000)
+        self.driver.swipe(start_x, start_y, start_x, end_y, 4000)
 

@@ -21,7 +21,7 @@ class SearchPlace(object):
                 self.spp.get_search_result_btn(name, address).click()
                 return 'place was selected'
             except:
-                self.spp.scroll_screen()
+                self.spp.scroll_screen
                 self.get_place_from_bottom(name, address, count-1)
         else:
             return 'place wasn\'t found'

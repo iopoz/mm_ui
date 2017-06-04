@@ -1,3 +1,4 @@
+from models.editor import Editor
 from models.enter_to_application import EnterToApplication
 from models.navigate import Navigate
 from models.place_info import PlaceInfo
@@ -11,6 +12,7 @@ class Application(object):
         self.search = SearchPlace(self)
         self.navigate = Navigate(self)
         self.place_details = PlaceInfo(self)
+        self.editor = Editor(self)
 
         # -----global variables-----#
         self.first_enter = True
