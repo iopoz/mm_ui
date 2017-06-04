@@ -6,6 +6,9 @@ class FullEditorPlacePage(Page):
     def place_category_field(self):
         parent_elm = self.wait_until_not_exist('category')
         return parent_elm.find_element_by_id('name')
+    @property
+    def top_screen(self):
+        return self.driver.find_element_by_id('category')
 
     @property
     def name_place_frame(self):
@@ -74,6 +77,14 @@ class FullEditorPlacePage(Page):
         return self.driver.find_element_by_id('edit_opening_hours')
 
     @property
+    def open_time(self):
+        return self.wait_until_not_exist('tv__time_open')
+
+    @property
+    def close_time(self):
+        return self.wait_until_not_exist('tv__time_close')
+
+    @property
     def phone_block(self):
         return self.driver.find_element_by_id('block_phone')
 
@@ -90,12 +101,27 @@ class FullEditorPlacePage(Page):
         return self.web_block.find_element_by_id('input')
 
     @property
+    def email_block(self):
+        return self.driver.find_element_by_id('block_email')
+
+    @property
+    def email(self):
+        return self.email_block.find_element_by_id('input')
+
+    @property
     def cuisine_block(self):
         return self.driver.find_element_by_id('block_cuisine')
 
     @property
     def cuisine(self):
         return self.cuisine_block.find_element_by_id('cuisine')
+
+    def get_cuisine_by_name(self, cuisine):
+        cuisines = self.driver.find_elements_by_class_name('android.widget.LinearLayout')
+        for cuisine_crnt in cuisines:
+            if cuisine in cuisine_crnt.find_element_by_id('cuisine').text:
+                return cuisine_crnt.find_element_by_id('selected')
+        return None
 
     @property
     def wifi(self):

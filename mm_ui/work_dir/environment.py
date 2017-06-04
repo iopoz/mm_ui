@@ -9,3 +9,7 @@ place_type = u'Ресторан'#unicodedata.normalize('NFKD', u'Рестора�
 language = 'Latin'
 name_place_in_language = 'Rukkola Latin'
 place_zip = '109012'
+t_open = '9:30'
+t_close = '21:17'
+email = 'test@test.com'
+new_cuisine = u'Австрийская кухня'

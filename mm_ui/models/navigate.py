@@ -15,3 +15,7 @@ class Navigate(object):
         self.np.query_field.clear()
         self.np.query_field.send_keys(query)
 
+    def save_changes(self):
+        self.np.save_btn.click()
+
+

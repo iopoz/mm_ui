@@ -41,3 +41,9 @@ class Page(object):
         start_x = int(self.screen_size['width'] / 2)
         self.driver.swipe(start_x, start_y, start_x, end_y, 4000)
 
+    @property
+    def scroll_screen_to_top(self):
+        start_y = int(self.screen_size['height'] * 0.2)
+        end_y = int(self.screen_size['height'] * 0.8)
+        start_x = int(self.screen_size['width'] / 2)
+        self.driver.swipe(start_x, start_y, start_x, end_y, 4000)

@@ -95,13 +95,6 @@ def pytest_runtest_makereport(item, call):
             with pytest.allure.step('Restart Application'):
                 droid_driver.driver.close_app()
                 droid_driver.driver.launch_app()
-            try:
-                cancel = droid_driver.driver.find_element_by_id('Cancel')
-                if cancel is not None:
-                    allure.attach('Crash', 'application crashed')
-                    cancel.click()
-            except:
-                allure.attach('Error', 'Error in application or tests')
         except:
             pass
 
