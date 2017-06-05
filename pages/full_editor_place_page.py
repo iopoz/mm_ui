@@ -1,3 +1,5 @@
+from math import cos, sin
+
 from pages.page import Page
 
 
@@ -46,7 +48,10 @@ class FullEditorPlacePage(Page):
 
     @property
     def street(self):
-        return self.driver.find_element_by_id('street')
+        el = self.driver.find_element_by_id('street')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def building_block(self):
@@ -54,7 +59,10 @@ class FullEditorPlacePage(Page):
 
     @property
     def building(self):
-        return self.building_block.find_element_by_id('input')
+        el = self.building_block.find_element_by_id('input')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def zip_block(self):
@@ -62,7 +70,10 @@ class FullEditorPlacePage(Page):
 
     @property
     def zip(self):
-        return self.zip_block.find_element_by_id('input')
+        el = self.zip_block.find_element_by_id('input')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def more_details_frame(self):
@@ -70,11 +81,17 @@ class FullEditorPlacePage(Page):
 
     @property
     def working_time(self):
-        return self.driver.find_element_by_id('opening_hours')
+        el = self.driver.find_element_by_id('opening_hours')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def working_time_editor_btn(self):
-        return self.driver.find_element_by_id('edit_opening_hours')
+        el = self.driver.find_element_by_id('edit_opening_hours')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def open_time(self):
@@ -84,13 +101,49 @@ class FullEditorPlacePage(Page):
     def close_time(self):
         return self.wait_until_not_exist('tv__time_close')
 
+    def get_hour_radio(self, hour):
+        radios = self.driver.find_elements_by_class_name('android.widget.RadialTimePickerView$RadialPickerTouchHelper')
+        for radio in radios:
+            if str(hour) in radio.get_attribute('content-desc'):
+                return radio
+
+    def get_minutes_radio(self, minute):
+        radios = self.driver.find_elements_by_class_name('android.widget.RadialTimePickerView$RadialPickerTouchHelper')
+        top_radio = None
+        bottom_radio = None
+        for radio in radios:
+            if radio.get_attribute('content-desc') == '0':
+                top_radio = radio
+            if radio.get_attribute('content-desc') == '30':
+                bottom_radio = radio
+                break
+        top_center = {'x': int(top_radio.location['x'] + top_radio.size['width']/2),
+                      'y': int(top_radio.location['y'] + top_radio.size['height']/2)}
+
+        bottom_center = {'x': int(bottom_radio.location['x'] + bottom_radio.size['width'] / 2),
+                         'y': int(bottom_radio.location['y'] + bottom_radio.size['height'] / 2)}
+        r = int(bottom_center['y'] - top_center['y']/2)
+        end_y = top_center['y'] + (r - int(r * cos(minute * 6)))
+        end_x = top_center['x'] + (int(r * sin(minute * 6)))
+        start_x = top_center['x']
+        start_y = top_center['y']
+        return {'s_x': start_x, 's_y': start_y, 'e_x': end_x, 'e_y': end_y}
+
+    @property
+    def ok_time_btn(self):
+        return self.driver.find_element_by_id('button1')
+
+
     @property
     def phone_block(self):
         return self.driver.find_element_by_id('block_phone')
 
     @property
     def phone(self):
-        return self.phone_block.find_element_by_id('input')
+        el = self.phone_block.find_element_by_id('input')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def web_block(self):
@@ -98,7 +151,10 @@ class FullEditorPlacePage(Page):
 
     @property
     def web(self):
-        return self.web_block.find_element_by_id('input')
+        el = self.web_block.find_element_by_id('input')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def email_block(self):
@@ -106,7 +162,10 @@ class FullEditorPlacePage(Page):
 
     @property
     def email(self):
-        return self.email_block.find_element_by_id('input')
+        el = self.email_block.find_element_by_id('input')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     @property
     def cuisine_block(self):
@@ -114,7 +173,10 @@ class FullEditorPlacePage(Page):
 
     @property
     def cuisine(self):
-        return self.cuisine_block.find_element_by_id('cuisine')
+        el = self.cuisine_block.find_element_by_id('cuisine')
+        if el.location['y'] < int(self.screen_size['height'] * 0.8):
+            return el
+        raise Exception('element is not available')
 
     def get_cuisine_by_name(self, cuisine):
         cuisines = self.driver.find_elements_by_class_name('android.widget.LinearLayout')

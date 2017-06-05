@@ -89,12 +89,21 @@ class Editor(object):
                 time_btn = self.ep.working_time_editor_btn
                 time_btn.is_displayed()
                 time_btn.click()
-                self.ep.open_time.send_keys(open_time)
-                self.ep.close_time.send_keys(close_time)
+                self.ep.open_time.click()
+                open_time = open_time.split(':')
+                close_time = close_time.split(':')
+                self.set_time(open_time)
+                self.set_time(close_time)
                 self.app.navigation.save_changes()
             except NoSuchElementException:
                 self.ep.scroll_screen
                 self.edit_working_time(open_time, close_time, count - 1)
+
+    def set_time(self, time):
+        self.ep.get_hour_radio(time[0]).click()
+        coordinate = self.ep.get_minutes_radio(time[1])
+        self.ep.driver.swipe(coordinate['s_x'], coordinate['s_y'], coordinate['e_x'], coordinate['s_y'], 4000)
+        self.ep.ok_time_btn.click()
 
     def edit_email(self, email, count=3):
         if count > 0:
