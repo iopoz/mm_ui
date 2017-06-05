@@ -59,7 +59,7 @@ class Editor(object):
                     wifi.click()
             except NoSuchElementException:
                 self.ep.scroll_screen
-                self.turn_wifi_on(count-1)
+                self.turn_wifi_on(count - 1)
 
     def scroll_to_editor_top(self, count=4):
         if count > 0:
@@ -102,7 +102,7 @@ class Editor(object):
                 self.ep.scroll_screen
                 self.edit_email(email, count - 1)
 
-    def add_cuisine(self, cuisine, count = 3):
+    def add_cuisine(self, cuisine, count=3):
         if count > 0:
             try:
                 cuisine_btn = self.ep.cuisine
