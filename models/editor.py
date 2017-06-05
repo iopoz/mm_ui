@@ -1,3 +1,4 @@
+from math import cos, sin
 from selenium.common.exceptions import NoSuchElementException
 from pages.full_editor_place_page import FullEditorPlacePage
 
@@ -32,7 +33,7 @@ class Editor(object):
         try:
             zip_elm = self.ep.zip
             zip_elm.is_displayed()
-        except NoSuchElementException:
+        except:
             self.ep.scroll_screen
         self.ep.zip.send_keys(code)
 
@@ -57,7 +58,7 @@ class Editor(object):
                 wifi.is_displayed()
                 if wifi.get_attribute('checked') == 'false':
                     wifi.click()
-            except NoSuchElementException:
+            except:
                 self.ep.scroll_screen
                 self.turn_wifi_on(count - 1)
 
@@ -66,7 +67,7 @@ class Editor(object):
             try:
                 self.ep.top_screen.is_displayed()
                 return 'screen was scrolled to top'
-            except NoSuchElementException:
+            except:
                 self.ep.scroll_screen_to_top
                 self.scroll_to_editor_top(count - 1)
 
@@ -81,16 +82,32 @@ class Editor(object):
                 close_time = close_time.split(':')
                 self.set_time(open_time)
                 self.set_time(close_time)
-                self.app.navigation.save_changes()
-            except NoSuchElementException:
+                self.app.navigate.save_changes()
+            except:
                 self.ep.scroll_screen
                 self.edit_working_time(open_time, close_time, count - 1)
 
     def set_time(self, time):
-        self.ep.get_hour_radio(time[0]).click()
-        coordinate = self.ep.get_minutes_radio(time[1])
-        self.ep.driver.swipe(coordinate['s_x'], coordinate['s_y'], coordinate['e_x'], coordinate['s_y'], 4000)
+        radio = self.ep.get_hour_radio(time[0])
+        self.__move_time_arrow(radio['top'], radio['bottom'], time[0], angle=30)
+        radio = self.ep.get_minutes_radio
+        self.__move_time_arrow(radio['top'], radio['bottom'], time[1])
+
         self.ep.ok_time_btn.click()
+
+    def __move_time_arrow(self, top_radio, bottom_radio, value, angle=6):
+        top_center = {'x': int(top_radio.location['x'] + top_radio.size['width']/2),
+                      'y': int(top_radio.location['y'] + top_radio.size['height']/2)}
+
+        bottom_center = {'x': int(bottom_radio.location['x'] + bottom_radio.size['width'] / 2),
+                         'y': int(bottom_radio.location['y'] + bottom_radio.size['height'] / 2)}
+        r = int((bottom_center['y'] - top_center['y'])/2)
+        end_y = top_center['y'] + (r - int(r * cos(int(value) * angle)))
+        end_x = top_center['x'] + (int(r * sin(int(value) * angle)))
+        start_x = top_center['x']
+        start_y = top_center['y']
+        self.ep.driver.swipe(start_x, start_y, end_x, end_y, 6000)
+
 
     def edit_email(self, email, count=3):
         if count > 0:
@@ -98,7 +115,7 @@ class Editor(object):
                 email_btn = self.ep.email
                 email_btn.is_displayed()
                 email_btn.send_keys(email)
-            except NoSuchElementException:
+            except:
                 self.ep.scroll_screen
                 self.edit_email(email, count - 1)
 
@@ -119,6 +136,6 @@ class Editor(object):
                         self.ep.scroll_screen
                         attempt -= 1
                 self.app.navigate.save_changes()
-            except NoSuchElementException:
+            except:
                 self.ep.scroll_screen
                 self.add_cuisine(cuisine, count - 1)

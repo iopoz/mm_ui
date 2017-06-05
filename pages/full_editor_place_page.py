@@ -103,31 +103,21 @@ class FullEditorPlacePage(Page):
 
     def get_hour_radio(self, hour):
         radios = self.driver.find_elements_by_class_name('android.widget.RadialTimePickerView$RadialPickerTouchHelper')
-        for radio in radios:
-            if str(hour) in radio.get_attribute('content-desc'):
-                return radio
+        if int(hour) - 12 < 0:
+            top_radio = radios[12]
+            bottom_radio = radios[6]
+        else:
+            top_radio = radios[0]
+            bottom_radio = radios[18]
+        return {'top': top_radio, 'bottom': bottom_radio}
 
-    def get_minutes_radio(self, minute):
+    @property
+    def get_minutes_radio(self):
         radios = self.driver.find_elements_by_class_name('android.widget.RadialTimePickerView$RadialPickerTouchHelper')
-        top_radio = None
-        bottom_radio = None
-        for radio in radios:
-            if radio.get_attribute('content-desc') == '0':
-                top_radio = radio
-            if radio.get_attribute('content-desc') == '30':
-                bottom_radio = radio
-                break
-        top_center = {'x': int(top_radio.location['x'] + top_radio.size['width']/2),
-                      'y': int(top_radio.location['y'] + top_radio.size['height']/2)}
+        top_radio = radios[0]
+        bottom_radio = radios[5]
+        return {'top': top_radio, 'bottom': bottom_radio}
 
-        bottom_center = {'x': int(bottom_radio.location['x'] + bottom_radio.size['width'] / 2),
-                         'y': int(bottom_radio.location['y'] + bottom_radio.size['height'] / 2)}
-        r = int(bottom_center['y'] - top_center['y']/2)
-        end_y = top_center['y'] + (r - int(r * cos(minute * 6)))
-        end_x = top_center['x'] + (int(r * sin(minute * 6)))
-        start_x = top_center['x']
-        start_y = top_center['y']
-        return {'s_x': start_x, 's_y': start_y, 'e_x': end_x, 'e_y': end_y}
 
     @property
     def ok_time_btn(self):
