@@ -1,4 +1,6 @@
 import os
+from time import sleep
+
 import pytest
 import allure
 from allure.constants import AttachmentType
@@ -17,6 +19,29 @@ def search_folder(end_folder):
             if end_folder in root:
                 return os.path.join(root[0:root.find(end_folder)], end_folder)
         path = os.path.dirname(path)
+
+
+def get_free_device():
+    import subprocess
+
+    cmd = 'adb devices'
+    s = subprocess.check_output(cmd.split())
+    str_list = str(s).split('\\')
+    for device in str_list:
+        if device[0] == 'n' and len(device) > 2:
+            old_activity = ''
+            for i in range(0, 5):
+                cmd = "adb shell dumpsys window windows | grep -E 'mCurrentFocus'"
+                s = subprocess.check_output(cmd.split())
+                activity_str = str(s)
+                new_activity = activity_str[activity_str.find('com.'):]
+                if old_activity == new_activity:
+                    return device[1:]
+                else:
+                    old_activity = new_activity
+                    sleep(1)
+    raise Exception('You dont have free devices')
+
 
 @pytest.fixture(scope="session", autouse=True)
 def testing_session(request, create_caps):
@@ -40,12 +65,11 @@ def pytest_addoption(parser):
                      help="Application path")
     parser.addoption("--platformName", action="store", default="Android", help="Which mobile OS platform to use")
     parser.addoption("--platformVersion", action="store", default="7.0", help="Mobile OS version")
-    parser.addoption("--deviceName", action="store", default="QKLR6DKFUC95CQLB",
+    parser.addoption("--deviceName", action="store", default=get_free_device(),
                      help="The kind of mobile device or emulator to use")
     parser.addoption("--appPackage", action="store", default="com.mapswithme.maps.pro",
                      help="Java package of the Android app you want to run")
     parser.addoption("--driver_url", action="store", default="http://localhost:4723/wd/hub", help="For multi run")
-
 
 
 @pytest.fixture(scope="session")
@@ -91,7 +115,7 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
     if rep.when == "call" and rep.failed:
         try:
-            allure.attach('screenshot', droid_driver.driver.get_screenshot_as_png(), type=AttachmentType.PNG)
+            droid_driver.driver.get_screenshot_as_png()
             with pytest.allure.step('Restart Application'):
                 droid_driver.driver.close_app()
                 droid_driver.driver.launch_app()
