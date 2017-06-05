@@ -36,19 +36,6 @@ class Editor(object):
             self.ep.scroll_screen
         self.ep.zip.send_keys(code)
 
-    # def check_fields(self, fields, count=3):
-    #     if count > 0:
-    #         try:
-    #             self.ep.cuisine.is_displayed()
-    #             page = self.ep.get_page_source
-    #             match = 0
-    #             for k, v in fields.items():
-    #                 if self.ep.get_field(page, v):
-    #                     match +=1
-    #             return match == len(fields) - 1
-    #         except NoSuchElementException:
-    #             self.ep.scroll_screen
-    #             self.check_fields(fields, count-1)
     def is_field_correct(self, field, count=3):
         if count > 0:
             if self.PAGE is None:
