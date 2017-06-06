@@ -1,4 +1,4 @@
-from math import cos, sin
+from math import cos, sin, pi
 from time import sleep
 
 from selenium.common.exceptions import NoSuchElementException
@@ -108,15 +108,15 @@ class Editor(object):
 
         center = {'x': top_center['x'], 'y': top_center['y'] + r}
 
-        rx = top_center['x'] - center['x']
-        ry = top_center['y'] - center['y']
-        c = cos(int(value) * angle)
-        s = sin(int(value) * angle)
-        end_x = center['x'] + rx * c
-        end_y = center['y'] + rx * s + r
-
-        # end_x = top_center['x'] + int(r * cos(int(value) * angle))
-        # end_y = top_center['y'] + int(r * sin(int(value) * angle))
+        # rx = top_center['x'] - center['x']
+        # ry = top_center['y'] - center['y']
+        # c = cos(int(value) * angle)
+        # s = sin(int(value) * angle)
+        # end_x = center['x'] + rx * c
+        # end_y = center['y'] + rx * s + r
+        alpha = pi/2 - (2 * pi * int(value)/60)
+        end_x = r * cos(alpha)#top_center['x'] + int(r * cos(int(value) * angle))
+        end_y = r * sin(alpha)#top_center['y'] + int(r * sin(int(value) * angle))
         start_x = int(self.ep.radial_picker_location['x'] + 5)#top_center['x']
         start_y = int(self.ep.radial_picker_location['y'] + 5)#top_center['y']
         self.ep.driver.swipe(start_x, start_y, end_x, end_y, 3000)
