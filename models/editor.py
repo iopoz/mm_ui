@@ -1,4 +1,6 @@
 from math import cos, sin
+from time import sleep
+
 from selenium.common.exceptions import NoSuchElementException
 from pages.full_editor_place_page import FullEditorPlacePage
 
@@ -88,8 +90,9 @@ class Editor(object):
                 self.edit_working_time(open_time, close_time, count - 1)
 
     def set_time(self, time):
+        sleep(0.5)
         radio = self.ep.get_hour_radio(time[0])
-        self.__move_time_arrow(radio['top'], radio['bottom'], time[0], angle=30)
+        radio.click()
         radio = self.ep.get_minutes_radio
         self.__move_time_arrow(radio['top'], radio['bottom'], time[1])
 
@@ -102,11 +105,21 @@ class Editor(object):
         bottom_center = {'x': int(bottom_radio.location['x'] + bottom_radio.size['width'] / 2),
                          'y': int(bottom_radio.location['y'] + bottom_radio.size['height'] / 2)}
         r = int((bottom_center['y'] - top_center['y'])/2)
-        end_y = top_center['y'] + (r - int(r * cos(int(value) * angle)))
-        end_x = top_center['x'] + (int(r * sin(int(value) * angle)))
-        start_x = top_center['x']
-        start_y = top_center['y']
-        self.ep.driver.swipe(start_x, start_y, end_x, end_y, 6000)
+
+        center = {'x': top_center['x'], 'y': top_center['y'] + r}
+
+        rx = top_center['x'] - center['x']
+        ry = top_center['y'] - center['y']
+        c = cos(int(value) * angle)
+        s = sin(int(value) * angle)
+        end_x = center['x'] + rx * c
+        end_y = center['y'] + rx * s + r
+
+        # end_x = top_center['x'] + int(r * cos(int(value) * angle))
+        # end_y = top_center['y'] + int(r * sin(int(value) * angle))
+        start_x = int(self.ep.radial_picker_location['x'] + 5)#top_center['x']
+        start_y = int(self.ep.radial_picker_location['y'] + 5)#top_center['y']
+        self.ep.driver.swipe(start_x, start_y, end_x, end_y, 3000)
 
 
     def edit_email(self, email, count=3):

@@ -102,21 +102,19 @@ class FullEditorPlacePage(Page):
         return self.wait_until_not_exist('tv__time_close')
 
     def get_hour_radio(self, hour):
-        radios = self.driver.find_elements_by_class_name('android.widget.RadialTimePickerView$RadialPickerTouchHelper')
-        if int(hour) - 12 < 0:
-            top_radio = radios[12]
-            bottom_radio = radios[6]
-        else:
-            top_radio = radios[0]
-            bottom_radio = radios[18]
-        return {'top': top_radio, 'bottom': bottom_radio}
+        return self.driver.find_element_by_xpath(
+            "//android.widget.RadialTimePickerView.RadialPickerTouchHelper[@index='" + hour + "' ]")
 
     @property
     def get_minutes_radio(self):
         radios = self.driver.find_elements_by_class_name('android.widget.RadialTimePickerView$RadialPickerTouchHelper')
         top_radio = radios[0]
-        bottom_radio = radios[5]
+        bottom_radio = radios[6]
         return {'top': top_radio, 'bottom': bottom_radio}
+
+    @property
+    def radial_picker_location(self):
+        return self.driver.find_element_by_id('radial_picker').location
 
 
     @property
