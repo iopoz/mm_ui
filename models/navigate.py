@@ -18,4 +18,14 @@ class Navigate(object):
     def save_changes(self):
         self.np.save_btn.click()
 
+    def navigate_to_my_place(self):
+        self.np.my_position.click()
+        # screen = self.np.screen_size
+        # x = int(screen['width']/2)
+        # y = int(screen['height']/2)
+        # self.np.driver.swipe(x, y, x, y)
+
+
+
+
 

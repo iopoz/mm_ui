@@ -22,8 +22,8 @@ class Page(object):
     def wait_until_exist(self, locator):
         return self.wait.until_not(EC.visibility_of_element_located((By.ID, locator)))
 
-    def long_wait_until_not_exist(self, locator):
-        return self.wait.until_not(EC.visibility_of_element_located((By.ID, locator)))
+    def long_wait_until_exist(self, locator):
+        return self.long_wait.until_not(EC.visibility_of_element_located((By.ID, locator)))
 
     @property
     def get_page_source(self):

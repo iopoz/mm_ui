@@ -6,9 +6,19 @@ def init(app, env, storage):
     print('SetUP')
     storage.log = ''
     storage.log += app.enter_2_app.first_enter()
-    if app.first_enter:
+    if True:#app.first_enter:
+        app.navigate.navigate_to_my_place()
+        app.enter_2_app.download_maps()
         app.navigate.go_to_search()
         app.search.search_place_by_coordinates(env.msk_center)
+        app.enter_2_app.download_maps()
+        assert app.place_details.is_place_details_shown()
+        if not app.place_details.is_place_known():
+            app.place_details.download_map()
+
+
+
+
 
 
     yield (storage)  # everything after 'yield' is executed on tear-down

@@ -10,6 +10,14 @@ class ShortAboutPlacePage(Page):
     def short_about_place_title(self):
         return self.driver.find_element_by_id('tv__title')
 
+    @property
+    def downloader_status(self):
+        return self.driver.find_element_by_id('downloader_status')
+
+    @property
+    def download_progress(self):
+        return self.long_wait_until_exist('downloader_progress_wheel')
+
     def get_place_title(self, page):
         return page.find(".//*[@resource-id='com.mapswithme.maps.pro:id/tv__title']").get(
             'text')  # contains(@address,'Downing')

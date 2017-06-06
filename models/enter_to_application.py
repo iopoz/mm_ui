@@ -18,3 +18,17 @@ class EnterToApplication(object):
             msg = 'Application was run before \n'
             print(msg)
             return msg
+
+    def download_maps(self):
+        try:
+            download_maps_btn = self.e2ap.downloader_map_btn
+            download_maps_btn.is_displayed()
+            download_maps_btn.click()
+            self.e2ap.download_progress()
+            return 'map is downloaded \n'
+        except NoSuchElementException:
+            try:
+               self.e2ap.download_progress()
+               return 'map is downloaded \n'
+            except:
+                return 'map is already downloaded \n'

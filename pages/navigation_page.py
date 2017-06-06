@@ -30,3 +30,7 @@ class NavigationPage(Page):
     @property
     def bookmarks_btn(self):
         return self.driver.find_element_by_id('bookmarks')
+
+    @property
+    def my_position(self):
+        return self.driver.find_element_by_id('my_position')

@@ -13,3 +13,7 @@ class EnterToApplicationPage(Page):
     @property
     def downloader_map_btn(self):
         return self.driver.find_element_by_id('downloader_button')
+
+    @property
+    def download_progress(self):
+        return self.long_wait_until_exist('wheel_downloader_progress')

@@ -15,6 +15,17 @@ class PlaceInfo(object):
         self.PAGE = self.sapp.get_page_source
         return elm.is_displayed()
 
+    def is_place_known(self):
+        try:
+            self.sapp.downloader_status.is_displayed()
+            return False
+        except NoSuchElementException:
+            return True
+
+    def download_map(self):
+        self.sapp.downloader_status.click()
+        self.sapp.download_progress
+
     def is_arrow_up(self):
         try:
             self.sapp.about_place_coordinate.is_displayed()
