@@ -99,28 +99,22 @@ class Editor(object):
         self.ep.ok_time_btn.click()
 
     def __move_time_arrow(self, top_radio, bottom_radio, value, angle=6):
-        top_center = {'x': int(top_radio.location['x'] + top_radio.size['width']/2),
-                      'y': int(top_radio.location['y'] + top_radio.size['height']/2)}
+        top_center = {'x': int(top_radio.location['x'] + top_radio.size['width'] / 2),
+                      'y': int(top_radio.location['y'] + top_radio.size['height'] / 2)}
 
         bottom_center = {'x': int(bottom_radio.location['x'] + bottom_radio.size['width'] / 2),
                          'y': int(bottom_radio.location['y'] + bottom_radio.size['height'] / 2)}
-        r = int((bottom_center['y'] - top_center['y'])/2)
+        r = int((bottom_center['y'] - top_center['y']) / 2)
 
         center = {'x': top_center['x'], 'y': top_center['y'] + r}
-
-        # rx = top_center['x'] - center['x']
-        # ry = top_center['y'] - center['y']
-        # c = cos(int(value) * angle)
-        # s = sin(int(value) * angle)
-        # end_x = center['x'] + rx * c
-        # end_y = center['y'] + rx * s + r
-        alpha = pi/2 - (2 * pi * int(value)/60)
-        end_x = r * cos(alpha)#top_center['x'] + int(r * cos(int(value) * angle))
-        end_y = r * sin(alpha)#top_center['y'] + int(r * sin(int(value) * angle))
-        start_x = int(self.ep.radial_picker_location['x'] + 5)#top_center['x']
-        start_y = int(self.ep.radial_picker_location['y'] + 5)#top_center['y']
+        alpha = pi / 2 - (2 * pi * int(value) / 60)
+        end_x = int(r * cos(alpha))
+        end_y = int(r * sin(alpha))
+        end_x += center['x']
+        end_y = center['y'] - end_y
+        start_x = int(self.ep.radial_picker_location['x'] + 5)
+        start_y = int(self.ep.radial_picker_location['y'] + 5)
         self.ep.driver.swipe(start_x, start_y, end_x, end_y, 3000)
-
 
     def edit_email(self, email, count=3):
         if count > 0:
