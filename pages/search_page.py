@@ -7,21 +7,21 @@ class SearchPage(Page):
         return self.driver.find_element_by_id('tabs')
 
     def search_tabs_btn(self, name):
-        tabs = self.search_tabs_view.find_elements_by_class_name('ActionBar$Tab')
+        tabs = self.search_tabs_view.find_elements_by_class_name('android.widget.TextView')
         for tab in tabs:
-            if name.lower() in tab.find_element_by_class_name('android.widget.TextView').text.lower():
+            if name.lower() in tab.text.lower():
                 return tab
         raise Exception('element absents!')
 
     @property
-    def catigory_table(self):
+    def category_table(self):
         return self.driver.find_element_by_id('recycler')
 
-    def get_catigory(self, name):
-        catigories = self.catigory_table.find_elements_by_class_name('android.widget.TextView')
-        for catigory in catigories:
-            if name in catigory.text:
-                return catigory
+    def get_category(self, name):
+        categories = self.category_table.find_elements_by_class_name('android.widget.TextView')
+        for category in categories:
+            if name in category.text:
+                return category
         return None
 
     @property
@@ -30,7 +30,7 @@ class SearchPage(Page):
 
     @property
     def place_list(self):
-        return self.catigory_table.find_elements_by_class_name('android.widget.RelativeLayout')
+        return self.category_table.find_elements_by_class_name('android.widget.RelativeLayout')
 
     def get_place_by_name(self, name):
         place_list = self.place_list

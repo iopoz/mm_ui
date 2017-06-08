@@ -47,3 +47,8 @@ class Page(object):
         end_y = int(self.screen_size['height'] * 0.8)
         start_x = int(self.screen_size['width'] / 2)
         self.driver.swipe(start_x, start_y, start_x, end_y, 4000)
+
+    @property
+    def map_screen(self):
+        return self.driver.find_element_by_id('map_fragment_container')
+

@@ -26,5 +26,13 @@ class SearchPlace(object):
         else:
             return 'place wasn\'t found'
 
+    def open_category_tab(self):
+        self.spp.search_tabs_btn('категории').click()
 
+    def open_category_by_name(self, name):
+        self.open_category_tab()
+        self.spp.get_category(name).click()
 
+    def open_place_from_category(self, name, address):
+        msg = self.get_place_from_bottom(name, address, count=50)
+        return msg

@@ -74,3 +74,6 @@ class PlaceInfo(object):
 
     def click_edit_place(self):
         self.sapp.editor_place.click()
+
+    def get_coordinate(self):
+        return self.sapp.about_place_coordinate.text

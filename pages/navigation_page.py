@@ -9,7 +9,7 @@ class NavigationPage(Page):
     @property
     def back_btn(self):
         tb = self.driver.find_element_by_id('toolbar')
-        return tb.find_element_by_class_name('ImageButton')#android.widget.ImageButton
+        return tb.find_element_by_class_name('android.widget.ImageButton')#android.widget.ImageButton
 
     @property
     def query_field(self):
@@ -34,3 +34,19 @@ class NavigationPage(Page):
     @property
     def my_position(self):
         return self.driver.find_element_by_id('my_position')
+
+    @property
+    def clear_btn(self):
+        return self.driver.find_element_by_id('clear')
+
+    @property
+    def system_message(self):
+        return self.driver.find_element_by_id('action_bar_root')
+
+    @property
+    def cancel_btn(self):
+        return self.system_message.find_element_by_id('button2')
+
+    @property
+    def ok_btn(self):
+        return self.system_message.find_element_by_id('button1')

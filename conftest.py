@@ -115,10 +115,9 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
     if rep.when == "call" and rep.failed:
         try:
-            droid_driver.driver.get_screenshot_as_png()
-            with pytest.allure.step('Restart Application'):
-                droid_driver.driver.close_app()
-                droid_driver.driver.launch_app()
+            droid_driver.driver.close_app()
+            droid_driver.driver.launch_app()
+            print(storage.log)
         except:
             pass
 
