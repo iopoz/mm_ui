@@ -117,7 +117,7 @@ def pytest_runtest_makereport(item, call):
         try:
             droid_driver.driver.close_app()
             droid_driver.driver.launch_app()
-            print(storage.log)
+            #print(storage.log)
         except:
             pass
 

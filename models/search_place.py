@@ -1,3 +1,4 @@
+# coding: utf-8
 from pages.search_page import SearchPage
 
 
@@ -19,19 +20,20 @@ class SearchPlace(object):
         if count > 0:
             try:
                 self.spp.get_search_result_btn(name, address).click()
-                return 'place was selected'
+                return 'place %s %s was selected \n' % (name, address)
             except:
                 self.spp.scroll_screen
                 self.get_place_from_bottom(name, address, count-1)
         else:
-            return 'place wasn\'t found'
+            return 'place %s %s wasn\'t found \n' % (name, address)
 
     def open_category_tab(self):
-        self.spp.search_tabs_btn('категории').click()
+        self.spp.search_tabs_btn(u'категории').click()
 
     def open_category_by_name(self, name):
         self.open_category_tab()
         self.spp.get_category(name).click()
+        return 'selected category %s \n' % name
 
     def open_place_from_category(self, name, address):
         msg = self.get_place_from_bottom(name, address, count=50)

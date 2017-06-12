@@ -30,6 +30,7 @@ class Editor(object):
                 attempt -= 1
         assert self.ep.name_place_frame.is_displayed()
         self.ep.get_name_by_location(type_l).send_keys(name)
+        return '%s was set as new %s language \n' % (name, type_l)
 
     def add_zip_code(self, code):
         try:
@@ -38,6 +39,7 @@ class Editor(object):
         except:
             self.ep.scroll_screen
         self.ep.zip.send_keys(code)
+        return '%s was set as zip code \n' % code
 
     def is_field_correct(self, field, count=3):
         if count > 0:
@@ -60,6 +62,7 @@ class Editor(object):
                 wifi.is_displayed()
                 if wifi.get_attribute('checked') == 'false':
                     wifi.click()
+                    return 'wifi was turned on \n'
             except:
                 self.ep.scroll_screen
                 self.turn_wifi_on(count - 1)
@@ -80,11 +83,12 @@ class Editor(object):
                 time_btn.is_displayed()
                 time_btn.click()
                 self.ep.open_time.click()
-                open_time = open_time.split(':')
-                close_time = close_time.split(':')
-                self.set_time(open_time)
-                self.set_time(close_time)
+                list_open_time = open_time.split(':')
+                list_close_time = close_time.split(':')
+                self.set_time(list_open_time)
+                self.set_time(list_close_time)
                 self.app.navigate.save_changes()
+                #return 'time was changed on %s - open time and %s - close time \n' % (open_time, close_time)
             except:
                 self.ep.scroll_screen
                 self.edit_working_time(open_time, close_time, count - 1)
@@ -122,6 +126,7 @@ class Editor(object):
                 email_btn = self.ep.email
                 email_btn.is_displayed()
                 email_btn.send_keys(email)
+                return 'email was set on %s \n' % email
             except:
                 self.ep.scroll_screen
                 self.edit_email(email, count - 1)
@@ -133,16 +138,19 @@ class Editor(object):
                 cuisine_btn.is_displayed()
                 cuisine_btn.click()
                 attempt = 100
+                msg = 'none of cuisines were selected'
                 while attempt > 0:
                     cuisine_chb = self.ep.get_cuisine_by_name(cuisine)
                     if cuisine_chb is not None:
                         if cuisine_chb.get_attribute('checked') == 'false':
                             cuisine_chb.click()
+                            msg = 'was added %s cuisine \n' % cuisine
                         break
                     else:
                         self.ep.scroll_screen
                         attempt -= 1
                 self.app.navigate.save_changes()
+                return msg
             except:
                 self.ep.scroll_screen
                 self.add_cuisine(cuisine, count - 1)
