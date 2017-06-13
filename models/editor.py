@@ -88,10 +88,10 @@ class Editor(object):
                 self.set_time(list_open_time)
                 self.set_time(list_close_time)
                 self.app.navigate.save_changes()
-                #return 'time was changed on %s - open time and %s - close time \n' % (open_time, close_time)
+                return 'time was changed on %s - open time and %s - close time \n' % (open_time, close_time)
             except:
                 self.ep.scroll_screen
-                self.edit_working_time(open_time, close_time, count - 1)
+                return self.edit_working_time(open_time, close_time, count - 1)
 
     def set_time(self, time):
         sleep(0.5)
@@ -129,7 +129,7 @@ class Editor(object):
                 return 'email was set on %s \n' % email
             except:
                 self.ep.scroll_screen
-                self.edit_email(email, count - 1)
+                return self.edit_email(email, count - 1)
 
     def add_cuisine(self, cuisine, count=3):
         if count > 0:
@@ -153,4 +153,4 @@ class Editor(object):
                 return msg
             except:
                 self.ep.scroll_screen
-                self.add_cuisine(cuisine, count - 1)
+                return  self.add_cuisine(cuisine, count - 1)

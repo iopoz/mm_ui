@@ -21,12 +21,8 @@ def init(app, env, storage):
 
     yield (storage)  # everything after 'yield' is executed on tear-down
     print(storage.log)
-    # with open('log.txt', 'w') as file:
-    #     file.write(storage.log)
-    file = open('log.txt', 'w')
-    file.write(storage.log)
-    file.close()
-    print('Tear-down')
+    with open('log.txt', 'w') as file:
+        file.write(storage.log)
 
 
 class TestTestTask:
@@ -73,7 +69,7 @@ class TestTestTask:
 
         storage.log += app.editor.turn_wifi_on()
         app.editor.scroll_to_editor_top()
-        app.editor.edit_working_time(env.t_open, env.t_close)
+        storage.log += app.editor.edit_working_time(env.t_open, env.t_close)
         storage.log += app.editor.edit_email(env.email)
         storage.log += app.editor.add_cuisine(env.new_cuisine)
         app.navigate.save_changes()

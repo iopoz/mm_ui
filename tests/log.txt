@@ -1,0 +1,22 @@
+Application was run before 
+55.112522, 36.613148
+selected category Еда 
+place Руккола Никольская улица, 8/1 с1 was selected 
+arrow is up 
+name is matched 
+type is matched 
+address is matched 
+distance exist 
+direction exist 
+Rukkola Latin was set as new Latin language 
+109012 was set as zip code 
+55.756881, 37.622613
+Ежедневно 11:00-24:00
++7 903 1334556
+http://rucola.com.ru
+Итальянская кухня
+wifi was turned on 
+time was changed on 9:35 - open time and 21:17 - close time 
+email was set on test@test.com 
+was added Австрийская кухня cuisine 
+user came back to the map
